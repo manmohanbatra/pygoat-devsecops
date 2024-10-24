@@ -33,3 +33,18 @@ stages:
           command: 'buildAndPush'
           Dockerfile: '**/Dockerfile'
         displayName: 'Build and Push Docker Image'
+
+- stage: test
+  dependsOn: build
+  jobs:
+    
+    - job: run_sca_analysis
+      displayName: Run SCA Analysis
+      steps:
+      
+      - task: CmdLine@2
+        inputs:
+          script: |
+            pip install safety
+            safety check -r requirements.txt --continue-on-error --output json > $(Pipeline.Workspace)/dependency-check-report.json
+        displayName: 'Safety Dependency Check'
