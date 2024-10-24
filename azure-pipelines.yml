@@ -48,3 +48,9 @@ stages:
             pip install safety
             safety check -r requirements.txt --continue-on-error --output json > $(Pipeline.Workspace)/dependency-check-report.json
         displayName: 'Safety Dependency Check'
+      
+      - task: PublishPipelineArtifact@1
+        inputs:
+          targetPath: '$(Pipeline.Workspace)/dependency-check-report.json'
+          artifact: 'dependency-check-report'
+          publishLocation: 'pipeline'
