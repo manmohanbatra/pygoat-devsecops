@@ -26,11 +26,10 @@ stages:
       - script: |
           pip install -r requirements.txt
         displayName: 'Install Dependencies'
-      
       - task: Docker@2
         inputs:
           containerRegistry: 'dockerhub'
-          repository: '$(image)'
+          repository: 'manmohanb'
           command: 'buildAndPush'
           Dockerfile: '**/Dockerfile'
-        displayName: 'Build and Push Docker image'
+        displayName: 'Build and Push Docker Image'
